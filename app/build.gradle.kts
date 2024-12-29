@@ -56,8 +56,16 @@ dependencies {
     implementation(libs.androidx.compose.ui.ui)
     implementation(libs.androidx.ui.text.google.fonts)
 
+    // API
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
     // Compose Destinations
     implementation(libs.core)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.cardview)
     ksp(libs.ksp)
 
     // Room

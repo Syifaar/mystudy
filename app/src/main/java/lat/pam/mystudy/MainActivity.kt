@@ -15,9 +15,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.app.ActivityCompat
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.navigation.dependency
 import dagger.hilt.android.AndroidEntryPoint
+import lat.pam.mystudy.api.adapter.QuotesAdapter
+import lat.pam.mystudy.api.model.QuotesResponse
 import lat.pam.mystudy.domain.model.Session
 import lat.pam.mystudy.domain.model.Subject
 import lat.pam.mystudy.domain.model.Task
@@ -25,9 +29,17 @@ import lat.pam.mystudy.ui.NavGraphs
 import lat.pam.mystudy.ui.destinations.SessionScreenRouteDestination
 import lat.pam.mystudy.ui.session.StudySessionTimerService
 import lat.pam.mystudy.ui.theme.MystudyTheme
+import retrofit2.Call
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private lateinit var swipeRefresh: SwipeRefreshLayout
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var call: Call<QuotesResponse>
+    private lateinit var QuotesAdapter : QuotesAdapter
+
+
     private var isBound by mutableStateOf(false)
     private lateinit var timerService: StudySessionTimerService
     private val connection = object : ServiceConnection {
