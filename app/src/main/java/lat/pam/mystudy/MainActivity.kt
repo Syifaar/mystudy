@@ -20,8 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.navigation.dependency
 import dagger.hilt.android.AndroidEntryPoint
-import lat.pam.mystudy.api.adapter.QuotesAdapter
-import lat.pam.mystudy.api.model.QuotesResponse
+
 import lat.pam.mystudy.domain.model.Session
 import lat.pam.mystudy.domain.model.Subject
 import lat.pam.mystudy.domain.model.Task
@@ -36,8 +35,7 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var recyclerView: RecyclerView
-    private lateinit var call: Call<QuotesResponse>
-    private lateinit var QuotesAdapter : QuotesAdapter
+
 
 
     private var isBound by mutableStateOf(false)
