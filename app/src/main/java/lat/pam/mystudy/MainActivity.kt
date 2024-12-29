@@ -10,17 +10,24 @@ import android.os.Bundle
 import android.os.IBinder
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.navigation.dependency
 import dagger.hilt.android.AndroidEntryPoint
-
 import lat.pam.mystudy.domain.model.Session
 import lat.pam.mystudy.domain.model.Subject
 import lat.pam.mystudy.domain.model.Task
@@ -30,13 +37,12 @@ import lat.pam.mystudy.ui.session.StudySessionTimerService
 import lat.pam.mystudy.ui.theme.MystudyTheme
 import retrofit2.Call
 
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var recyclerView: RecyclerView
-
-
 
     private var isBound by mutableStateOf(false)
     private lateinit var timerService: StudySessionTimerService
@@ -63,14 +69,16 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            if (isBound){
-                MystudyTheme {
+            MystudyTheme {
+                if (isBound) {
                     DestinationsNavHost(
                         navGraph = NavGraphs.root,
                         dependenciesContainerBuilder = {
-                            dependency(SessionScreenRouteDestination) {timerService}
+                            dependency(SessionScreenRouteDestination) { timerService }
                         }
                     )
+                } else {
+                    LogoScreen()
                 }
             }
         }
@@ -91,5 +99,19 @@ class MainActivity : ComponentActivity() {
         super.onStop()
         unbindService(connection)
         isBound = false
+    }
+}
+
+@Composable
+fun LogoScreen() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = "App Logo",
+            modifier = Modifier.size(150.dp)
+        )
     }
 }
